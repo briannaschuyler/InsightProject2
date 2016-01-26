@@ -177,8 +177,8 @@ def x01_CalculateMeetingsPerWeek(start_date_input):
 	print(len(df_allevts[:]['user_id'].unique()))
 	print(len(df_allevts[:]['user_id']))
 
-	for i in range(10):
-		print(len(df_allevts.attendees[i]))
+	#for i in range(10):
+	#	print(len(df_allevts.attendees[i]))
 
 
 	# In[34]:
