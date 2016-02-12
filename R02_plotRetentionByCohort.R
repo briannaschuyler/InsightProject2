@@ -1,3 +1,7 @@
+# This script makes a nice plot of weekly usage of the product, with
+# each cohort in a different color so you can see retention of
+# each cohort over time.
+
 library(ggplot2) # to use ggplot for nice graphics
 library(reshape)
 
@@ -12,8 +16,6 @@ setwd(path)
 #write.csv(xm, paste(path,'04b_UserRegistrationDateForCohortPlotLong.csv', sep=''))
 
 xm=read.csv(paste(path,'04b_UserRegistrationDateForCohortPlotLong.csv',sep=''))
-#xm=read.csv(paste(path,'04b_UserRegistrationDateForCohortPlotLongJuneRemoved.csv',sep=''))
-
 
 # Relabel the factors as dates.
 xm$registrationWeek = as.Date(xm$registrationWeek, format = "%m/%d/%y")

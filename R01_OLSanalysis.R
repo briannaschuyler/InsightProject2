@@ -1,3 +1,8 @@
+# This script performs linear regression on a number of factors that might
+# relate to retention (defined as number of weeks the product was used in
+# the first twelve.)  Then partial r^2 are calculated for each variable to
+# get % unique variance explained.
+
 library(ggplot2) # to use ggplot for nice graphics
 library(asbio)
 
@@ -90,19 +95,19 @@ v = c('NumberSignedUpFromCompany_i_log',
             'added_agenda_itemWeek0_i_log',
             'assigned_action_itemWeek0_i_log')
 
-vRnl = c('Number Signed Up \nFrom Company (< 30)',
-              'Number of Weekly \nMeetings < 20)',
+vRnl = c('Number Signed Up \nFrom Company',
+              'Number of Weekly \nMeetings',
               'Portion Of Meetings \nOrganized',
-              'Added Meeting to \nWorkLife',
-              'Added agenda item to \nWorkLife Agenda',
-              'Assigned Action Item to \nWorkLife Agenda')
+              'Added Meeting',
+              'Added Item to Agenda',
+              'Assigned Action Item \nto Agenda')
 
 vR = c('Number Signed Up From Company',
        'Number of Weekly Meetings',
        'Portion Of Meetings Organized',
-       'Added Meeting to WorkLife',
-       'Added agenda item to WorkLife Agenda',
-       'Assigned Action Item to WorkLife Agenda')
+       'Added Meeting',
+       'Added Item to Agenda',
+       'Assigned Action Item to Agenda')
 
 
 r2df = data.frame(v = v, vR = vR, vRnl = vRnl)
@@ -152,5 +157,23 @@ for(i in seq(6)){
   ggsave(plot=y,height=4,width=6,dpi=200, filename=paste(path,'images/',v[i],'Loess.pdf',sep=''), useDingbats=FALSE)    
 
 }
+
+# For the demo, plot different versions of weekly meeting plot.
+y=ggplot(data=x, aes(x=MeetingsTotalWeek0_i, y=WeeksVisitedOutOf12)) +
+  geom_point(alpha = 0.1, colour='blue') +
+  theme(legend.position="none", text = element_text(size=15),
+        axis.text.x=element_text(colour="black"),
+        axis.text.y=element_text(colour="black"))+
+  #scale_x_log10()+
+  #geom_smooth(method = lm, size=2, color='black')+
+  geom_smooth(size=2, color='black')+
+  scale_y_continuous(breaks=c(0,2,4,6,8,10,12))+
+  # xlab(paste(VOIname,' \n(log-tranformed)',sep=''))+    
+  xlab('Number of Weekly Meetings')+
+  ylab('Number of Weeks Product Used \n(Out of 12 Weeks)')
+
+
+ggsave(plot=y,height=4,width=6,dpi=200, filename=paste(path,'images/NumberOfMeetingsLoess.pdf',sep=''), useDingbats=FALSE)    
+
 
 
